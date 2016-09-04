@@ -15,24 +15,109 @@ app.controller("MyCtrl", function($scope, $firebaseObject) {
 //var ref = new Firebase("https://quickchat-f0c1e.firebaseio.com/Available");
 
 const preObject = document.getElementById('object');
+const preObject2 = document.getElementById('object2');
 const ulList =  document.getElementById('users');
+const messageList = document.getElementById('message_list');
+const messageForm = document.getElementById('message-form');
+const userName = document.getElementById('username');
+const userNameInputForm = document.getElementById('user-name-input');
+const enterMessage = document.getElementById('enterMessage');
+const messageInput = document.getElementById('message');
+const sendButton = document.getElementById('submit');
+
 
 const ref = firebase.database().ref().child('object');
-
+//const messageListRef = firebase.database().ref().child('message_lsit');
 //this.object = $firebaseObject(ref);
 //console.dir(firebase.database().rf);
-const refList = ref.child('users');
-const refChat = ref.child('chat');
+const messageListRef = ref.child('message-list');
+const userNameListRef = ref.child('users');
 
-ref.on('value', snap   => {
+console.log(userNameListRef);
+
+messageListRef.on('value', snap   => {
   preObject.innerText = JSON.stringify(snap.val(), null, 3);
 });
 
-/*
-refChat.on('child_added' snap => {
+userNameListRef.on('value', snap   => {
+  preObject2.innerText = JSON.stringify(snap.val(), null, 3);
+});
 
+userNameInputForm.addEventListener('submit', event => {
+  event.preventDefault();
+  userNameListRef.push({
+    name: userName.value
+  });
+  userNameInputForm.style.display = 'none';
+  enterMessage.innerText = "Welcome to QuickChat " + userName.value;
+});
+
+userNameListRef.on('child_added', snap => {
+  var val = snap.val();
+  const li = document.createElement('li');
+  li.innerText = val.name;
+  li.id = snap.key;
+  ulList.appendChild(li);
+});
+
+userNameListRef.on('child_changed', snap => {
+
+  const liChanged = document.getElementById(snap.key);
+  liChanged.innerText = snap.val();
+});
+
+
+userNameListRef.on('child_removed', snap => {
+
+  const liToRemove= document.getElementById(snap.key);
+  liToRemove.remove();
+});
+
+messageForm.addEventListener('submit', event => {
+  event.preventDefault();
+  messageListRef.push({
+    message: messageInput.value
+  });
+  messageForm.reset();
+});
+
+messageListRef.on('child_added', snap => {
+  var val = snap.val();
+  const li = document.createElement('li');
+  li.innerText = val.message;
+  li.id = snap.key;
+  messageList.appendChild(li);
+});
+
+messageListRef.on('child_changed', snap => {
+
+  const liChanged = document.getElementById(snap.key);
+  liChanged.innerText = snap.val();
+});
+
+
+messageListRef.on('child_removed', snap => {
+
+  const liToRemove= document.getElementById(snap.key);
+  liToRemove.remove();
+});
+
+
+/*
+ref.on('value', snap   => {
+  preObject.innerText = JSON.stringify(snap.val(), null, 3);
 });
 */
+
+/*
+$scope.messages = [
+
+  {name: prashant, message: "What's up?"},
+  {name: ankit, message: "I'm good man"},
+  {name: prashant, message: "Let's play today"}
+]
+*/
+
 /*
 //Sync list changes
 refList.on('child_added', snap => {

@@ -22,7 +22,7 @@
 
   <body ng-app="QuickChat">
 
-      <div id="message" ng-controller="MyCtrl">
+      <div ng-controller="MyCtrl">
         <!--
       <pre>
 {{ ctrl.object | json }}
@@ -32,23 +32,40 @@
       <pre id="object">
       </pre>
 
+      <pre id="object2">
+      </pre>
+
+      <form id="user-name-input" action="#">
+        <p> Enter Your Name: <input type='text' id="username"> </p>
+        <button> Enter Chat </button>
+      </form>
+
+      <pre id="enterMessage">
+      </pre>
+
       <ul id="users">
       </ul>
 
-      <ul id="chat">
+      <ul id="message_list">
 
       </ul>
 
-      <form id="message-form">
-             <div>
-               <input type="text" id="message">
-             </div>
-             <button id="submit" type="submit">
+
+      <form id="message-form" action="#">
+
+             <input type="text" id="message">
+
+             <button id="submit" type="submit" value="Update">
                Send
              </button>
      </form>
 
 <!--
+     <ul ng-repeat="message in messages">
+       <li><b>{{message.name}}</b> </br>
+       <p>{{message.message}}</p></li>
+     </ul>
+
       <ul>
       <li ng-repeat="message in messages">{{ message.text }}</li>
      </ul>
