@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Quick Chat</title>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js" synchronized></script>
+
+    <!-- AngularFire -->
+   <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
+
+   <script type="text/javascript" src="app.js"/>
+
+   <script type="text/javascript">
+     console.log("askjfkjd");
+   </script>
+  </head>
+
+  <body ng-app="QuickChat">
+
+      <div id="message" ng-controller="MyCtrl">
+        <!--
+      <pre>
+{{ ctrl.object | json }}
+      </pre>
+    -->
+
+      <pre id="object">
+      </pre>
+
+      <ul id="users">
+      </ul>
+
+      <ul id="chat">
+
+      </ul>
+
+      <form id="message-form">
+             <div>
+               <input type="text" id="message">
+             </div>
+             <button id="submit" type="submit">
+               Send
+             </button>
+     </form>
+
+<!--
+      <ul>
+      <li ng-repeat="message in messages">{{ message.text }}</li>
+     </ul>
+   -->
+    </div>
+  </body>
+</html>
