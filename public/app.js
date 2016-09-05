@@ -23,6 +23,7 @@ const enterMessage = document.getElementById('enterMessage');
 const messageInput = document.getElementById('message');
 const sendButton = document.getElementById('submit');
 const chatView = document.getElementById('chat-view');
+const chatBuddy = document.getElementById('chat-buddy');
 
 
 const ref = firebase.database().ref().child('object');
@@ -65,10 +66,12 @@ userNameListRef.on('child_added', snap => {
     var to_user_id = li.id;
 
     var messageUID = uniqueID(from_user_id, to_user_id);
-    if(messageUID == 0){
+    if(messageUID == 0) {
       alert("You can talk to yoursef without QuickChat!!");
       return;
     }
+
+    chatBuddy.innerText = from_user_name + " your chat buddy is " + val.name
 
     const messageUIDRef = chatsRef.child(messageUID);
 
