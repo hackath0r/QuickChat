@@ -28,13 +28,6 @@
 {{ ctrl.object | json }}
       </pre>
     -->
-
-      <pre id="object">
-      </pre>
-
-      <pre id="object2">
-      </pre>
-
       <form id="user-name-input" action="#">
         <p> Enter Your Name: <input type='text' id="username"> </p>
         <button> Enter Chat </button>
@@ -46,19 +39,34 @@
       <ul id="users">
       </ul>
 
-      <ul id="message_list">
+      <div hidden id="chat-view">
+        <p>-----------------------------------------------------------------------</p>
+        <pre id="chatbuddy">
+        </pre>
 
-      </ul>
+        <ul id="message_list">
+
+        </ul>
 
 
-      <form id="message-form" action="#">
+        <form id="message-form" action="#">
 
              <input type="text" id="message">
 
              <button id="submit" type="submit" value="Update">
                Send
              </button>
-     </form>
+        </form>
+     </div>
+
+     <p>-----------------------------------------------------------------------</p>
+
+     <pre id="object">
+     </pre>
+
+     <pre id="object2">
+     </pre>
+
 
 <!--
      <ul ng-repeat="message in messages">
