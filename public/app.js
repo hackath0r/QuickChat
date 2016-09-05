@@ -53,8 +53,9 @@ userNameInputForm.addEventListener('submit', event => {
     name: userName.value
   });
 
+  console.dir(from_user_ref);
   from_user_name = userName.value;
-  //from_user_id = from_user_ref.name();
+  from_user_id = from_user_ref.key;
 
   userNameInputForm.style.display = 'none';
   enterMessage.innerText = "Welcome to QuickChat " + userName.value + "!";
@@ -73,7 +74,18 @@ userNameListRef.on('child_added', snap => {
       "message-list": null
     });
   */
-    const messageListRef = chatsRef.child('message-list');
+    var to_user_id = li.id;
+
+    var messageUID = uniqueID(from_user_id, to_user_id);
+    if(messageUID == 0){
+      alert("You can talk to yoursef without QuickChat!!");
+      return;
+    }
+
+    const messageUIDRef = chatsRef.child(messageUID);
+    console.log(messageUID);
+
+    const messageListRef = messageUIDRef.child('message-list');
 
 
     messageList.innerHTML = "";
@@ -106,7 +118,6 @@ userNameListRef.on('child_added', snap => {
     });
 
 
-/*
     messageListRef.on('child_changed', snapshot => {
 
       const liChanged = document.getElementById(snapshot.key);
@@ -119,7 +130,7 @@ userNameListRef.on('child_added', snap => {
       const liToRemove= document.getElementById(snapshot.key);
       liToRemove.remove();
     });
-*/
+
 
   };
 });
@@ -189,3 +200,10 @@ ref.child("Chats").on("value", function(snapshot) {
 //$scope.messages = $firebaseArray(ref);
 
 });
+
+function uniqueID(A, B) {
+  if(A.localeCompare(B) == 0){
+    return 0;
+  }
+  return A.localeCompare(B) < 0 ? A+B : B+A;
+}
