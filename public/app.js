@@ -9,18 +9,16 @@ var config = {
 firebase.initializeApp(config);
 
 var app = angular.module('QuickChat', ['firebase']);
-console.log(app);
 
 app.controller("MyCtrl", function($scope, $firebaseObject) {
-//var ref = new Firebase("https://quickchat-f0c1e.firebaseio.com/Available");
 
 const preObject = document.getElementById('object');
 const preObject2 = document.getElementById('object2');
+const userNameInputForm = document.getElementById('user-name-input');
 const ulList =  document.getElementById('users');
+const userName = document.getElementById('username');
 const messageList = document.getElementById('message_list');
 const messageForm = document.getElementById('message-form');
-const userName = document.getElementById('username');
-const userNameInputForm = document.getElementById('user-name-input');
 const enterMessage = document.getElementById('enterMessage');
 const messageInput = document.getElementById('message');
 const sendButton = document.getElementById('submit');
@@ -39,10 +37,6 @@ var from_user_ref;
 var from_user_id;
 var from_user_name;
 
-console.log(chatsRef);
-
-console.log(userNameListRef);
-
 userNameListRef.on('value', snap   => {
   preObject2.innerText = JSON.stringify(snap.val(), null, 3);
 });
@@ -53,7 +47,6 @@ userNameInputForm.addEventListener('submit', event => {
     name: userName.value
   });
 
-  console.dir(from_user_ref);
   from_user_name = userName.value;
   from_user_id = from_user_ref.key;
 
@@ -68,12 +61,7 @@ userNameListRef.on('child_added', snap => {
   li.id = snap.key;
   ulList.appendChild(li);
   li.ondblclick = function() {
-    //alert("you want to talk to " + li.innerText);
-    /*
-    chatsRef.push({
-      "message-list": null
-    });
-  */
+
     var to_user_id = li.id;
 
     var messageUID = uniqueID(from_user_id, to_user_id);
@@ -83,11 +71,10 @@ userNameListRef.on('child_added', snap => {
     }
 
     const messageUIDRef = chatsRef.child(messageUID);
-    console.log(messageUID);
 
     const messageListRef = messageUIDRef.child('message-list');
 
-
+    // Reset chat view
     messageList.innerHTML = "";
     chatView.style.display = 'block';
 
@@ -117,13 +104,11 @@ userNameListRef.on('child_added', snap => {
       }
     });
 
-
     messageListRef.on('child_changed', snapshot => {
 
       const liChanged = document.getElementById(snapshot.key);
       liChanged.innerText = snapshot.val();
     });
-
 
     messageListRef.on('child_removed', snapshot => {
 
@@ -147,60 +132,13 @@ userNameListRef.on('child_removed', snap => {
   liToRemove.remove();
 });
 
-
-
-/*
-ref.on('value', snap   => {
-  preObject.innerText = JSON.stringify(snap.val(), null, 3);
-});
-*/
-
-/*
-$scope.messages = [
-
-  {name: prashant, message: "What's up?"},
-  {name: ankit, message: "I'm good man"},
-  {name: prashant, message: "Let's play today"}
-]
-*/
-
-/*
-ref.set({
-title: "Hello World!",
-author: "Firebase",
-location: {
-  city: "San Francisco",
-  state: "California",
-  zip: 94103
-}*/
-
-
-/*
-ref.set({
-
-  Available: [],
-  Chats: {}
-
-})
-*/
-
-/*
-ref.child("Available").on("value", function(snapshot) {
-  alert(snapshot.val());  // Alerts "San Francisco"
-});
-
-ref.child("Chats").on("value", function(snapshot) {
-  alert(snapshot.val());
-})
-*/
-
 // create a synchronized array
 // click on `index.html` above to see it used in the DOM!
 // console.log($firebaseArray(ref));
 //$scope.messages = $firebaseArray(ref);
-
 });
 
+// Generates Unique identifier using two unique strings
 function uniqueID(A, B) {
   if(A.localeCompare(B) == 0){
     return 0;
