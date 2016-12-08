@@ -27,10 +27,8 @@ const chatBuddy = document.getElementById('chat-buddy');
 
 
 const ref = firebase.database().ref().child('object');
-//const messageListRef = firebase.database().ref().child('message_lsit');
 //this.object = $firebaseObject(ref);
 //console.dir(firebase.database().rf);
-//const messageListRef = ref.child('message-list');
 const userNameListRef = ref.child('users');
 const chatsRef = ref.child('chats');
 
